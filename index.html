@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Princess 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b1121;
+            --accent-pink: #ff4d6d;
+            --text-white: #ffffff;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-white);
+            scroll-behavior: smooth;
+        }
+
+        /* Star Background Animation */
+        .stars {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+        }
+
+        /* Section Styling */
+        section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+
+        section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Content Styling */
+        h1 { font-family: 'Dancing Script', cursive; font-size: 3rem; color: var(--accent-pink); }
+        .btn {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: var(--accent-pink);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .btn:hover { transform: scale(1.1); }
+
+        /* Checklist Styling */
+        .bucket-list {
+            text-align: left;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        .check-item { margin: 10px 0; display: flex; align-items: center; }
+        input[type="checkbox"] { margin-right: 10px; accent-color: var(--accent-pink); }
+
+        /* Music Card Animation */
+        .music-card {
+            width: 250px;
+            padding: 15px;
+            background: white;
+            color: black;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transform: rotate(-3deg);
+            transition: 0.5s;
+        }
+        .music-card:hover { transform: rotate(0deg) scale(1.05); }
+
+    </style>
+</head>
+<body>
+
+    <div class="stars"></div>
+
+    <section id="page1" class="active">
+        <h1 class="floating">Happy New Year!</h1>
+        <p style="font-size: 5rem;">2026</p>
+        <button class="btn" onclick="nextPage(2)">See what I made for you</button>
+    </section>
+
+    <section id="page2">
+        <h1>To My Favorite Person</h1>
+        <p>Thanks for being part of my 2025.<br>Let's make 2026 even better together!</p>
+        <div class="floating" style="font-size: 3rem;">🎁</div>
+        <button class="btn" onclick="nextPage(3)">Continue</button>
+    </section>
+
+    <section id="page3">
+        <h1>Our 2026 Goals</h1>
+        <div class="bucket-list">
+            <div class="check-item"><input type="checkbox"> Visit a new city together</div>
+            <div class="check-item"><input type="checkbox"> Take more candid photos</div>
+            <div class="check-item"><input type="checkbox"> Weekly movie nights</div>
+            <div class="check-item"><input type="checkbox"> Cook a 3-course meal</div>
+        </div>
+        <button class="btn" onclick="nextPage(4)">Listen to This</button>
+    </section>
+
+    <section id="page4">
+        <h1>Songs That Match Your Vibe</h1>
+        <div class="music-card">
+            <p><strong>🎵 High On You</strong></p>
+            <p style="font-size: 0.8rem;">Good Vibes Only</p>
+            <hr>
+            <p style="color: var(--accent-pink);">▶ PLAYING</p>
+        </div>
+        <button class="btn" onclick="nextPage(5)">One Last Thing</button>
+    </section>
+
+    <section id="page5">
+        <h1>Sealed with Love</h1>
+        <div class="floating" style="font-size: 4rem; cursor: pointer;" onclick="alert('I love you! ❤️')">✉️</div>
+        <p>Click the letter to open</p>
+        <button class="btn" onclick="location.reload()">Restart the Journey</button>
+    </section>
+
+    <script>
+        function nextPage(pageNumber) {
+            // Remove active class from all sections
+            document.querySelectorAll('section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            // Scroll to the next section and add active class
+            const nextSec = document.getElementById('page' + pageNumber);
+            nextSec.scrollIntoView({ behavior: 'smooth' });
+            nextSec.classList.add('active');
+        }
+
+        // Intersection Observer to trigger animations on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
